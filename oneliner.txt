@@ -1,0 +1,81 @@
+# SCCleaner One-Liner Commands
+# Copy and paste these commands into PowerShell or CMD
+
+# ============================================
+# LOCAL EXECUTION - POWERSHELL
+# ============================================
+
+# Interactive Mode
+.\sccleaner.ps1
+
+# Auto-Delete Mode
+.\sccleaner.ps1 1
+
+# With Execution Policy Bypass
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1 1
+
+# ============================================
+# LOCAL EXECUTION - CMD (Command Prompt)
+# ============================================
+
+# Interactive Mode
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File sccleaner.ps1
+
+# Auto-Delete Mode
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File sccleaner.ps1 1
+
+# From Different Directory
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\path\to\sccleaner\sccleaner.ps1" 1
+
+# ============================================
+# WEB DOWNLOAD - POWERSHELL (Interactive Mode)
+# ============================================
+
+# Download to temp and run (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'YOUR_URL_HERE' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1"
+
+# Execute directly from memory (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'YOUR_URL_HERE' -UseBasicParsing).Content"
+
+# ============================================
+# WEB DOWNLOAD - POWERSHELL (Auto-Delete Mode)
+# ============================================
+
+# Download to temp and run with auto-delete (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'YOUR_URL_HERE' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 1"
+
+# Execute from memory with auto-delete (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$env:SC_AUTODELETE='1'; Invoke-Expression (Invoke-WebRequest -Uri 'YOUR_URL_HERE' -UseBasicParsing).Content"
+
+# ============================================
+# WEB DOWNLOAD - CMD (Command Prompt)
+# ============================================
+
+# Interactive Mode (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'YOUR_URL_HERE' -OutFile %TEMP%\sccleaner.ps1; & %TEMP%\sccleaner.ps1"
+
+# Auto-Delete Mode (replace YOUR_URL_HERE)
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'YOUR_URL_HERE' -OutFile %TEMP%\sccleaner.ps1; & %TEMP%\sccleaner.ps1 1"
+
+# ============================================
+# WITH ERROR HANDLING
+# ============================================
+
+# With TLS 1.2 enforcement and error handling
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; try { Invoke-WebRequest -Uri 'YOUR_URL_HERE' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 } catch { Write-Host 'Error: ' $_.Exception.Message }"
+
+# ============================================
+# EXAMPLE WITH ACTUAL GITHUB RAW URL FORMAT
+# ============================================
+
+# Replace these placeholders:
+# - yourusername: Your GitHub username
+# - yourrepo: Your repository name
+# - main/branch: Your branch name (main, master, etc.)
+
+# PowerShell Example:
+# powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/yourusername/yourrepo/main/sccleaner.ps1' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1"
+
+# CMD Example:
+# powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/yourusername/yourrepo/main/sccleaner.ps1' -OutFile %TEMP%\sccleaner.ps1; & %TEMP%\sccleaner.ps1"
