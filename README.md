@@ -2,6 +2,30 @@
 
 A PowerShell tool to identify and delete vulnerable versions of the ConnectWise ScreenConnect installer.
 
+## Run commands
+
+### Dry run (scan only — no files deleted)
+
+Lists matching ScreenConnect/ConnectWise Control installers. Press **Enter** at the prompt to exit without deleting.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1
+```
+
+### Delete ScreenConnect installers (auto-delete)
+
+**Deletes all matching vulnerable installer files** (cutoff date and exclusions still apply). Use after reviewing dry-run output.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1 1
+```
+
+Run from the repo folder, or use the full path to `sccleaner.ps1`. From the web (no local clone):
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 1"
+```
+
 ## Purpose
 
 SCCleaner scans user profiles and common download locations for old ScreenConnect/ConnectWise Control installer files (`.exe` and `.msi`) that were last modified before a cutoff date (August 31 of the current or previous year, depending on the current month). This helps remove potentially vulnerable installer files that may have been downloaded but not cleaned up.
