@@ -2,40 +2,68 @@
 
 A PowerShell tool to identify and delete vulnerable versions of the ConnectWise ScreenConnect installer.
 
-## Run commands
+## ScreenConnect commands
 
-### Dry run (scan only — no files deleted)
+Paste into the **Commands** tab on a session or machine. Run **dry** first, review output, then run **delete**.
 
-Lists matching ScreenConnect/ConnectWise Control installers. Press **Enter** at the prompt to exit without deleting.
+### 1. SCCleaner — vulnerable installer cleanup
 
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1
-```
+Removes old ScreenConnect/ConnectWise Control `.exe` / `.msi` installers from user profiles (cutoff: Dec 11, 2025). Repo: [monobrau/sccleaner](https://github.com/monobrau/sccleaner)
 
-### Delete ScreenConnect installers (auto-delete)
-
-**Deletes all matching vulnerable installer files** (cutoff date and exclusions still apply). Use after reviewing dry-run output.
+**Dry run:**
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1 1
+#!ps
+#timeout=120000
+#maxlength=100000
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$repo = 'monobrau/sccleaner'
+$url = "https://raw.githubusercontent.com/$repo/main/sccleaner.ps1"
+$script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
+& ([ScriptBlock]::Create($script)) dry
 ```
 
-Run from the repo folder, or use the full path to `sccleaner.ps1`.
+**Delete:**
 
-### ScreenConnect command console (pull from GitHub)
-
-Paste into the **Commands** tab on a session or machine. These download the latest script from GitHub and run it non-interactively (no prompts — required for SC command console).
-
-**Dry run (scan only — review output in Commands tab):**
-
-```cmd
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -UseBasicParsing -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 dry"
+```powershell
+#!ps
+#timeout=120000
+#maxlength=100000
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$repo = 'monobrau/sccleaner'
+$url = "https://raw.githubusercontent.com/$repo/main/sccleaner.ps1"
+$script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
+& ([ScriptBlock]::Create($script)) 1
 ```
 
-**Delete ScreenConnect installers (auto-delete):**
+### 2. Temp cleanup — stale ScreenConnect temp folders & old installers
 
-```cmd
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -UseBasicParsing -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 1"
+Removes leftover ScreenConnect temp folders and installer files from `%TEMP%` and similar paths. Preserves the active client. Repo: [monobrau/screenconnect-temp-cleanup](https://github.com/monobrau/screenconnect-temp-cleanup)
+
+**Dry run:**
+
+```powershell
+#!ps
+#timeout=120000
+#maxlength=100000
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$repo = 'monobrau/screenconnect-temp-cleanup'
+$url = "https://raw.githubusercontent.com/$repo/main/Remove-ScreenConnectTempCopies.ps1"
+$script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
+& ([ScriptBlock]::Create($script))
+```
+
+**Delete:**
+
+```powershell
+#!ps
+#timeout=120000
+#maxlength=100000
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$repo = 'monobrau/screenconnect-temp-cleanup'
+$url = "https://raw.githubusercontent.com/$repo/main/Remove-ScreenConnectTempCopies.ps1"
+$script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
+& ([ScriptBlock]::Create($script)) -Delete
 ```
 
 ## Purpose
