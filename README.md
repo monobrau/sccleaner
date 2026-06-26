@@ -20,10 +20,22 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\sccleaner.ps1 1
 ```
 
-Run from the repo folder, or use the full path to `sccleaner.ps1`. From the web (no local clone):
+Run from the repo folder, or use the full path to `sccleaner.ps1`.
 
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 1"
+### ScreenConnect command console (pull from GitHub)
+
+Paste into the **Commands** tab on a session or machine. These download the latest script from GitHub and run it non-interactively (no prompts — required for SC command console).
+
+**Dry run (scan only — review output in Commands tab):**
+
+```cmd
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -UseBasicParsing -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 dry"
+```
+
+**Delete ScreenConnect installers (auto-delete):**
+
+```cmd
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/monobrau/sccleaner/main/sccleaner.ps1' -UseBasicParsing -OutFile $env:TEMP\sccleaner.ps1; & $env:TEMP\sccleaner.ps1 1"
 ```
 
 ## Purpose

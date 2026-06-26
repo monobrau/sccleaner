@@ -10,11 +10,14 @@
 
 $ErrorActionPreference = 'SilentlyContinue'
 
-# Determine if auto-delete mode is enabled
+# Determine run mode: dry (scan only), auto-delete, or interactive
 $AUTO = ($env:SC_AUTODELETE -eq '1' -or $env:SC_AUTODELETE -eq 'true')
+$DRY = ($env:SC_DRYRUN -eq '1' -or $env:SC_DRYRUN -eq 'true')
 if ($args -and $args.Count -gt 0) {
     if ($args[0] -match '^(1|true|yes|y)$') {
         $AUTO = $true
+    } elseif ($args[0] -match '^(dry|scan|0)$') {
+        $DRY = $true
     }
 }
 
@@ -95,6 +98,12 @@ $indexed = $hits | ForEach-Object {
 
 # Display found files
 $indexed | Format-Table -AutoSize
+
+# Dry-run mode (non-interactive scan only)
+if ($DRY) {
+    Write-Host ('DRY RUN complete. Found ' + $indexed.Count + ' file(s). No files deleted.')
+    exit 0
+}
 
 # Auto-delete mode
 if ($AUTO) {
