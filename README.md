@@ -36,9 +36,9 @@ $script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
 & ([ScriptBlock]::Create($script)) 1
 ```
 
-### 2. Temp cleanup — stale ScreenConnect temp folders & old installers
+### 2. Temp cleanup — stale temp folders, Automate cache & old installers
 
-Removes leftover ScreenConnect temp folders and installer files from `%TEMP%` and similar paths. Preserves the active client. Repo: [monobrau/screenconnect-temp-cleanup](https://github.com/monobrau/screenconnect-temp-cleanup)
+Removes leftover ScreenConnect temp folders, **ConnectWise Automate (LTSvc) package cache** (`C:\Windows\LTSvc\packages\connectwisecontrol\`), and old installer files. Preserves the active client and newest Automate deployment copy. Repo: [monobrau/screenconnect-temp-cleanup](https://github.com/monobrau/screenconnect-temp-cleanup)
 
 **Dry run:**
 
@@ -47,9 +47,9 @@ Removes leftover ScreenConnect temp folders and installer files from `%TEMP%` an
 #timeout=120000
 #maxlength=100000
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/3c3a1244b3ab58075337f9b9ff7162ac78b63789/Remove-ScreenConnectTempCopies.ps1'
+$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/6b15a3278002da0276832cb8af2e58515e027329/Remove-ScreenConnectTempCopies.ps1'
 $script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
-if ($script -notmatch '\$ScriptVersion = ''1\.2\.2''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.2.2' }
+if ($script -notmatch '\$ScriptVersion = ''1\.3\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.3.0' }
 & ([ScriptBlock]::Create($script))
 ```
 
@@ -60,9 +60,9 @@ if ($script -notmatch '\$ScriptVersion = ''1\.2\.2''') { throw 'Stale script dow
 #timeout=120000
 #maxlength=100000
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/3c3a1244b3ab58075337f9b9ff7162ac78b63789/Remove-ScreenConnectTempCopies.ps1'
+$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/6b15a3278002da0276832cb8af2e58515e027329/Remove-ScreenConnectTempCopies.ps1'
 $script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
-if ($script -notmatch '\$ScriptVersion = ''1\.2\.2''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.2.2' }
+if ($script -notmatch '\$ScriptVersion = ''1\.3\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.3.0' }
 & ([ScriptBlock]::Create($script)) -Delete
 ```
 
