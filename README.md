@@ -47,9 +47,9 @@ Removes leftover ScreenConnect temp folders, installers in **Downloads/Desktop/D
 #timeout=120000
 #maxlength=100000
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/40a8a9f462791fad4f0f14dec18c1c4e4cb15a21/Remove-ScreenConnectTempCopies.ps1'
+$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/78ae20e95df93be9908c8a3ec996bad95d9568a1/Remove-ScreenConnectTempCopies.ps1'
 $script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
-if ($script -notmatch '\$ScriptVersion = ''1\.4\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.4.0' }
+if ($script -notmatch '\$ScriptVersion = ''1\.5\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.5.0' }
 & ([ScriptBlock]::Create($script))
 ```
 
@@ -60,9 +60,9 @@ if ($script -notmatch '\$ScriptVersion = ''1\.4\.0''') { throw 'Stale script dow
 #timeout=120000
 #maxlength=100000
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/40a8a9f462791fad4f0f14dec18c1c4e4cb15a21/Remove-ScreenConnectTempCopies.ps1'
+$url = 'https://raw.githubusercontent.com/monobrau/screenconnect-temp-cleanup/78ae20e95df93be9908c8a3ec996bad95d9568a1/Remove-ScreenConnectTempCopies.ps1'
 $script = (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
-if ($script -notmatch '\$ScriptVersion = ''1\.4\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.4.0' }
+if ($script -notmatch '\$ScriptVersion = ''1\.5\.0''') { throw 'Stale script downloaded — update URL to latest commit or use ?v=1.5.0' }
 & ([ScriptBlock]::Create($script)) -Delete
 ```
 
